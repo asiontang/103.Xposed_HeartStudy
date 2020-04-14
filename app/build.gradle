@@ -1,0 +1,74 @@
+apply plugin: 'com.android.application'
+
+ext {
+    versionCode = 1
+    versionName = "200414.01.01.001"
+    versionMd5 = ' 04 (2ce6c16eabb5);' +//程序的源码版本唯一码，用于定位发布时对应的源码版本，方便未来查找Bug。
+            'Xposed:10(e3909927762c);'
+}
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+
+    defaultConfig {
+        applicationId "cn.asiontang.xposed.heart_study"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode project.ext.versionCode
+        versionName project.ext.versionName
+        manifestPlaceholders = [VersionMd5: project.ext.versionMd5]
+    }
+    signingConfigs {
+        debug {
+            storeFile file("debug.keystore")
+        }
+        release {
+            storeFile file('AsionTang.sign')
+            keyAlias 'AsionTang'
+            keyPassword ''
+            storePassword ''
+        }
+    }
+    buildTypes {
+        debug {
+            //signingConfig signingConfigs.debug
+
+            //TODO:方便调试替换APK,所以保持签名一致.
+            signingConfig signingConfigs.release
+        }
+        release {
+            signingConfig signingConfigs.release
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    //使用3.0.0及以上版本必须定义一个口味维度，否则会导致编辑报错
+    flavorDimensions "default"
+    productFlavors {
+        //TODO:方便调试替换APK,所以保持包名一致.
+        // 加个A开头以便把TEST排在第一位
+        //A_TEST {
+        //    applicationId defaultConfig.applicationId + '.debug'
+        //    manifestPlaceholders = [ProviderSuffix: ".debug"]
+        //}
+
+        // 发布版本
+        Product {
+            manifestPlaceholders = [ProviderSuffix: ""]
+        }
+
+        TaiChi {
+            //模拟太极白名单里的APP包名:
+            //Device Faker(com.devicefaker.free)v1.0.0[Lam Phuong(e6112ac3)]
+            applicationId "com.devicefaker.free"
+            versionCode 1
+            versionName '1.0.0'
+        }
+    }
+}
+
+dependencies {
+    compileOnly files('libs/XposedBridgeApi-54.jar')
+
+    api project(':78.Xposed')
+}

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+        package="cn.asiontang.xposed.heart_study">
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <application
+            android:allowBackup="false"
+            android:label="@string/app_name">
+        <!-- VersionMd5必须放在项目清单文件里,否则gradle插件无法正常识别会报错. -->
+        <!-- APP源码版本唯一码: -->
+        <meta-data
+                android:name="VersionMd5"
+                android:value="${VersionMd5}" />
+
+        <activity
+                android:name=".MainActivity"
+                android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <meta-data
+                android:name="xposedmodule"
+                android:value="true" />
+        <meta-data
+                android:name="xposeddescription"
+                android:value="103.Xposed_HeartStudy" />
+        <meta-data
+                android:name="xposedminversion"
+                android:value="30" />
+    </application>
+</manifest>
