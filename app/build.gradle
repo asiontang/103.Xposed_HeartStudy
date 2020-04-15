@@ -2,8 +2,8 @@ apply plugin: 'com.android.application'
 
 ext {
     versionCode = 1
-    versionName = "200414.01.01.001"
-    versionMd5 = ' 04 (2ce6c16eabb5);' +//程序的源码版本唯一码，用于定位发布时对应的源码版本，方便未来查找Bug。
+    versionName = "200415.01.03.003"
+    versionMd5 = ' 03 (2e5293d14e94);' +//程序的源码版本唯一码，用于定位发布时对应的源码版本，方便未来查找Bug。
             'Xposed:10(e3909927762c);'
 }
 android {
