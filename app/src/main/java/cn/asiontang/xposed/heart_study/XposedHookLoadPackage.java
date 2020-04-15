@@ -8,6 +8,7 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
 public class XposedHookLoadPackage extends BaseXposedHookLoadPackage
 {
+    public static final String HOOK_PACKAGE_NAME = "com.plagh.heartstudy";
     private static final String TAG = XposedHookLoadPackage.class.getName();
 
     public boolean handleLoadPackage4release(final XC_LoadPackage.LoadPackageParam loadPackageParam)
@@ -15,7 +16,7 @@ public class XposedHookLoadPackage extends BaseXposedHookLoadPackage
         //==========================================================================================
         // 需要 Hook 哪些应用?
         //==========================================================================================
-        if (!loadPackageParam.packageName.equalsIgnoreCase("com.plagh.heartstudy"))
+        if (!loadPackageParam.packageName.equalsIgnoreCase(HOOK_PACKAGE_NAME))
         {
             LogEx.log(TAG, loadPackageParam.packageName, "Hooked:NoMatched");
             return false;
@@ -34,7 +35,7 @@ public class XposedHookLoadPackage extends BaseXposedHookLoadPackage
             @Override
             protected void afterHookedMethod(final MethodHookParam param)
             {
-                if (!param.thisObject.getClass().getName().equalsIgnoreCase("org.autojs.autojs.App"))
+                if (!param.thisObject.getClass().getName().equalsIgnoreCase("com.plagh.heartstudy.base.MyApplication"))
                 {
                     LogEx.log(TAG, loadPackageParam.packageName, "Application", param.thisObject, "NoMatched");
                     return;
