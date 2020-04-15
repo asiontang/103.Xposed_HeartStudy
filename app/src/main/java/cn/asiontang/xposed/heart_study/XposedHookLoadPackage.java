@@ -55,6 +55,25 @@ public class XposedHookLoadPackage extends BaseXposedHookLoadPackage
      */
     private void handleLoadPackage4releaseWhenOnPerApplicationInit(final XC_LoadPackage.LoadPackageParam loadPackageParam)
     {
-        XposedHookClass_v7_0_4_1.hook(loadPackageParam);
+        try
+        {
+            XposedUtils.realHookAllMethods("android.os.SystemProperties", loadPackageParam.classLoader, "get", new XC_MethodHook()
+            {
+                @Override
+                protected void afterHookedMethod(final MethodHookParam param) throws Throwable
+                {
+                    //if (BuildConfig.DEBUG)
+                    //    LogEx.log(TAG, param.args, param.getResult(), param.method);
+
+                    if (param.args != null && param.args.length == 1 && param.args[0].equals("ro.build.hw_emui_api_level"))
+                        param.setResult("10");
+                }
+            });
+        }
+        catch (Throwable e)
+        {
+            LogEx.log(TAG, "hook:classLoader", loadPackageParam.classLoader);
+            LogEx.log(TAG, "hook Exception", e);
+        }
     }
 }
